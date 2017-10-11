@@ -6,7 +6,7 @@ class ExcelController < ApplicationController
 
   def show
     @excel = Excel.find_by(id: params[:id])
-    unless @excel
+    unless valid_id?(params[:id]) && @excel
       flash[:alert] = "There's no excel file with that id!"
       redirect_to new_excel_path
     end
@@ -27,5 +27,5 @@ class ExcelController < ApplicationController
   def excel_params
     {file: params.dig(:excel, :excel_file).try(:tempfile)}
   end
-  
+
 end
