@@ -5,7 +5,11 @@ class ExcelController < ApplicationController
   end
 
   def show
-    @excel = Excel.find(params[:id])
+    @excel = Excel.find_by(id: params[:id])
+    unless @excel
+      flash[:alert] = "There's no excel file with that id!"
+      redirect_to new_excel_path
+    end
   end
 
   def create
